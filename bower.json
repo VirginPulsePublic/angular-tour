@@ -20,8 +20,8 @@
     "url": "git://github.com/DaftMonk/angular-tour.git"
   },
   "main": [
-    "./dist/angular-tour-tpls.min.js",
-    "./dist/angular-tour.css"
+    "./dist/angular-tour.min.js",
+    "./dist/angular-tour.min.css"
   ],
   "ignore": [
     ".*",
