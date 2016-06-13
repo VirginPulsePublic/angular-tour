@@ -1,6 +1,6 @@
 /**
  * An AngularJS directive for showcasing features of your website
- * @version v0.2.5 - 2015-12-10
+ * @version v0.2.5 - 2015-10-02
  * @link https://github.com/DaftMonk/angular-tour
  * @author Tyler Henkel
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -22,7 +22,7 @@
     '$scope',
     'orderedList',
     function ($scope, orderedList) {
-      var self = this, steps = self.steps = orderedList(), firstCurrentStepChange = true;
+      var self = this, steps = self.steps = orderedList();
       // we'll pass these in from the directive
       self.postTourCallback = angular.noop;
       self.postStepCallback = angular.noop;
@@ -32,11 +32,7 @@
       $scope.$watch(function () {
         return self.currentStep;
       }, function (val) {
-        if (firstCurrentStepChange) {
-          firstCurrentStepChange = false;
-        } else {
-          self.select(val);
-        }
+        self.select(val);
       });
       self.select = function (nextIndex) {
         if (!angular.isNumber(nextIndex))
@@ -143,11 +139,9 @@
     '$compile',
     '$interpolate',
     '$timeout',
-    'scrollTo',
     'tourConfig',
     'debounce',
-    '$q',
-    function ($window, $compile, $interpolate, $timeout, scrollTo, tourConfig, debounce, $q) {
+    function ($window, $compile, $interpolate, $timeout, tourConfig, debounce) {
       var startSym = $interpolate.startSymbol(), endSym = $interpolate.endSymbol();
       var template = '<div tour-popup></div>';
       return {
@@ -157,6 +151,9 @@
         link: function (scope, element, attrs, tourCtrl) {
           attrs.$observe('tourtip', function (val) {
             scope.ttContent = val;
+          });
+          attrs.$observe('tourtipTitle', function (val) {
+            scope.ttTitle = val;
           });
           //defaults: tourConfig.placement
           attrs.$observe('tourtipPlacement', function (val) {
@@ -189,10 +186,6 @@
           //defaults: null
           attrs.$observe('tourtipElement', function (val) {
             scope.ttElement = val || null;
-          });
-          //defaults: null
-          attrs.$observe('tourtipTitle', function (val) {
-            scope.ttTitle = val || null;
           });
           //defaults: tourConfig.useSourceScope
           attrs.$observe('useSourceScope', function (val) {
@@ -360,13 +353,11 @@
           scope.proceed = function () {
             if (scope.onStepProceed) {
               var targetScope = getTargetScope();
-              var onProceedResult = targetScope.$eval(scope.onStepProceed);
-              $q.resolve(onProceedResult).then(function () {
-                scope.setCurrentStep(scope.getCurrentStep() + 1);
-              });
-            } else {
-              scope.setCurrentStep(scope.getCurrentStep() + 1);
+              $timeout(function () {
+                targetScope.$eval(scope.onStepProceed);
+              }, 100);
             }
+            scope.setCurrentStep(scope.getCurrentStep() + 1);
           };
         }
       };
@@ -374,7 +365,7 @@
   ]).directive('tourPopup', function () {
     return {
       replace: true,
-      templateUrl: 'tour/tour.tpl.html',
+      templateUrl: 'components/shared/widgets/coreStepTemplate.html',
       scope: true,
       restrict: 'EA',
       link: function (scope, element, attrs) {
@@ -451,20 +442,6 @@
       return new OrderedList();
     };
     return orderedListFactory;
-  }).factory('scrollTo', function () {
-    return function (target, containerElement, offsetY, offsetX, speed, ttPositionTop, ttPositionLeft) {
-      if (target) {
-        offsetY = offsetY || -100;
-        offsetX = offsetX || -100;
-        speed = speed || 500;
-        $('html,' + containerElement).stop().animate({
-          scrollTop: ttPositionTop + offsetY,
-          scrollLeft: ttPositionLeft + offsetX
-        }, speed);
-      } else {
-        $('html,' + containerElement).stop().animate({ scrollTop: 0 }, speed);
-      }
-    };
   }).factory('debounce', [
     '$timeout',
     '$q',
