@@ -9,7 +9,7 @@
     font-weight: 400;
     max-width: 400px;
     min-width: 370px;
-    height: 235px;
+    min-height: 235px;
     padding: 0px;
     background: #FFFFFF;
     -webkit-border-radius: 0px;
@@ -66,6 +66,7 @@
 .tour-tip .tour-content-wrapper {
     padding-left: 40px;
     padding-top: 40px;
+    padding-right: 40px;
 }
 
 .tour-tip .tour-content-wrapper .button {
@@ -106,27 +107,28 @@
 }
 
 .tour-title {
-  text-align: left;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1.63;
+    text-align: left;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.63;
 }
 
 .tour-content {
-  width: 290px;
-  font-size: 16px;
-  line-height: 1.63;
-  text-align: left;
-  padding-bottom: 22px;
+    width: 290px;
+    font-size: 16px;
+    line-height: 1.63;
+    text-align: left;
+    padding-bottom: 22px;
 }
 
 .all-set-skip-tour {
-  font-size: 13px;
-  text-align: center;
-  color: #2d3e47;
-  padding-top: 15px;
+    font-size: 13px;
+    text-align: center;
+    color: #2d3e47;
+    padding-top: 15px;
+    padding-bottom: 18px;
 }
 
 .all-set-skip-tour >a {
-  color: #3CBCBE;
+    color: #3CBCBE;
 }
