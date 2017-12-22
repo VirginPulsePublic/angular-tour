@@ -365,7 +365,7 @@
   ]).directive('tourPopup', function () {
     return {
       replace: true,
-      templateUrl: 'components/shared/widgets/coreStepTemplate.html',
+      templateUrl: '../../shared/widgets/coreStepTemplate.html',
       scope: true,
       restrict: 'EA',
       link: function (scope, element, attrs) {
