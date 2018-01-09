@@ -362,16 +362,7 @@
         }
       };
     }
-  ]).directive('tourPopup', function () {
-    return {
-      replace: true,
-      templateUrl: 'components/shared/widgets/coreStepTemplate.html',
-      scope: true,
-      restrict: 'EA',
-      link: function (scope, element, attrs) {
-      }
-    };
-  }).factory('orderedList', function () {
+  ]).factory('orderedList', function () {
     var OrderedList = function () {
       this.map = {};
       this._array = [];
